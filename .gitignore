@@ -4,7 +4,6 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-demo.mp4
 
 ### STS ###
 .apt_generated
