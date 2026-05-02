@@ -18,14 +18,18 @@ import java.util.List;
 /**
  * URI de base du contrôleur: /api/utilisateurs
  */
+// Stéréotype: contrôleur REST (retourne des JSON)
 @RestController
+
 @RequestMapping("/api/utilisateurs")
+// Génère un constructeur pour les champs finals (Lombok)
 @RequiredArgsConstructor
 public class UtilisateurRestController {
 
     private final IUtilisateurService utilisateurService;
 
     // Exigence énoncé (II.a): ajouter les utilisateurs.
+
     @PostMapping
     public Utilisateur ajouterUtilisateur(@RequestBody Utilisateur utilisateur) {
         return utilisateurService.ajouterUtilisateur(utilisateur);
@@ -52,12 +56,14 @@ public class UtilisateurRestController {
     }
 
     // Exigence énoncé (II.d): affecter utilisateur -> classe.
+
     @PutMapping("/{idUtilisateur}/classes/{codeClasse}")
     public void affecterUtilisateurClasse(@PathVariable Integer idUtilisateur, @PathVariable Integer codeClasse) {
         utilisateurService.affecterUtilisateurClasse(idUtilisateur, codeClasse);
     }
 
     // Exigence énoncé (II.e): nombre d'utilisateurs pour un niveau.
+
     @GetMapping("/niveau/{nv}/count")
     public Integer nbUtilisateursParNiveau(@PathVariable Niveau nv) {
         return utilisateurService.nbUtilisateursParNiveau(nv);

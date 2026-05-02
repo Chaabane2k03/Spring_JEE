@@ -9,6 +9,7 @@ import tn.fst.classroom_crb.entities.Specialite;
 
 public interface CoursClassroomRepository extends JpaRepository<CoursClassroom, Integer> {
 
-    @Query("select coalesce(sum(c.nbHeures), 0) from CoursClassroom c where c.specialite = :sp and c.classe.niveau = :nv")
+    // Déclare une requête JPQL personnalisée
+     @Query("select coalesce(sum(c.nbHeures), 0) from CoursClassroom c where c.specialite = :sp and c.classe.niveau = :nv")
     Integer nbHeuresParSpecEtNiv(@Param("sp") Specialite specialite, @Param("nv") Niveau niveau);
 }

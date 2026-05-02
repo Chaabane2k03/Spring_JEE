@@ -7,11 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * URI de base du contrôleur: /ui
  */
-@Controller
-@RequestMapping("/ui")
+// Stéréotype: contrôleur MVC (retourne des vues)
+ @Controller
+
+ @RequestMapping("/ui")
 public class DashboardController {
 
-    @GetMapping
+    
+     @GetMapping
     public String dashboard() {
         return "dashboard";
     }

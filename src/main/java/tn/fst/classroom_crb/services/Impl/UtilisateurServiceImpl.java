@@ -15,29 +15,33 @@ import tn.fst.classroom_crb.services.IUtilisateurService;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-@Transactional
-@Retryable(
-        retryFor = TransientDataAccessException.class,
-        maxAttemptsExpression = "${app.retry.max-attempts:3}",
-        backoff = @Backoff(
-                delayExpression = "${app.retry.delay-ms:200}",
-                multiplierExpression = "${app.retry.multiplier:2.0}",
-                maxDelayExpression = "${app.retry.max-delay-ms:2000}"
-        )
-)
+// Stéréotype: composant métier géré par Spring
+ @Service
+// Génère un constructeur pour les champs finals (Lombok)
+ @RequiredArgsConstructor
+// Transaction Spring (commit/rollback automatique)
+ @Transactional
+// Essaye de ré-exécuter la méthode en cas d'échec
+ @Retryable(
+ retryFor = TransientDataAccessException.class,
+ maxAttemptsExpression = "${app.retry.max-attempts:3}",
+ backoff = @Backoff(
+ delayExpression = "${app.retry.delay-ms:200}",
+ multiplierExpression = "${app.retry.multiplier:2.0}",
+ maxDelayExpression = "${app.retry.max-delay-ms:2000}"
+ )
+ )
 public class UtilisateurServiceImpl implements IUtilisateurService {
 
     private final UtilisateurRepository utilisateurRepository;
     private final ClasseRepository classeRepository;
 
-    @Override
+     @Override
     public Utilisateur ajouterUtilisateur(Utilisateur utilisateur) {
         return utilisateurRepository.save(utilisateur);
     }
 
-    @Override
+     @Override
     public void affecterUtilisateurClasse(Integer idUtilisateur, Integer codeClasse) {
         Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
                 .orElseThrow(() -> new IllegalArgumentException("Utilisateur introuvable avec id " + idUtilisateur));
@@ -47,26 +51,29 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
         utilisateurRepository.save(utilisateur);
     }
 
-    @Override
-    @Transactional(readOnly = true)
+     @Override
+    // Transaction Spring (commit/rollback automatique)
+     @Transactional(readOnly = true)
     public Integer nbUtilisateursParNiveau(Niveau nv) {
         return utilisateurRepository.countByClasseNiveau(nv);
     }
 
-    @Override
-    @Transactional(readOnly = true)
+     @Override
+    // Transaction Spring (commit/rollback automatique)
+     @Transactional(readOnly = true)
     public Utilisateur getUtilisateurById(Integer idUtilisateur) {
         return utilisateurRepository.findById(idUtilisateur)
                 .orElseThrow(() -> new IllegalArgumentException("Utilisateur introuvable avec id " + idUtilisateur));
     }
 
-    @Override
-    @Transactional(readOnly = true)
+     @Override
+    // Transaction Spring (commit/rollback automatique)
+     @Transactional(readOnly = true)
     public List<Utilisateur> getAllUtilisateurs() {
         return utilisateurRepository.findAll();
     }
 
-    @Override
+     @Override
     public Utilisateur updateUtilisateur(Integer idUtilisateur, Utilisateur utilisateur) {
         Utilisateur existing = utilisateurRepository.findById(idUtilisateur)
                 .orElseThrow(() -> new IllegalArgumentException("Utilisateur introuvable avec id " + idUtilisateur));
@@ -81,7 +88,7 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
         return utilisateurRepository.save(existing);
     }
 
-    @Override
+     @Override
     public void deleteUtilisateur(Integer idUtilisateur) {
         if (!utilisateurRepository.existsById(idUtilisateur)) {
             throw new IllegalArgumentException("Utilisateur introuvable avec id " + idUtilisateur);

@@ -4,11 +4,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest
-@ActiveProfiles("test")
+// Charge le contexte Spring pour les tests
+ @SpringBootTest
+// Active un profil Spring spécifique pour le test/configuration
+ @ActiveProfiles("test")
 class ClassroomCrbApplicationTests {
 
-	@Test
+	// Indique une méthode de test (JUnit)
+	 @Test
 	void contextLoads() {
 	}
 

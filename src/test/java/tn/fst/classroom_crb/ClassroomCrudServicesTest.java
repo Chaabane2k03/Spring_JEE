@@ -16,20 +16,26 @@ import tn.fst.classroom_crb.services.IUtilisateurService;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
-@ActiveProfiles("test")
+// Charge le contexte Spring pour les tests
+ @SpringBootTest
+// Active un profil Spring spécifique pour le test/configuration
+ @ActiveProfiles("test")
 class ClassroomCrudServicesTest {
 
-    @Autowired
+    // Injection de dépendance par Spring
+     @Autowired
     private IUtilisateurService utilisateurService;
 
-    @Autowired
+    // Injection de dépendance par Spring
+     @Autowired
     private IClasseService classeService;
 
-    @Autowired
+    // Injection de dépendance par Spring
+     @Autowired
     private ICoursClassroomService coursClassroomService;
 
-    @Test
+    // Indique une méthode de test (JUnit)
+     @Test
     void crudComplet_shouldWorkForAllServices() {
         Classe classe = new Classe();
         classe.setTitre("3INFO1");

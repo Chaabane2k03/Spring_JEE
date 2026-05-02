@@ -22,29 +22,38 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
-@ActiveProfiles("test")
+// Charge le contexte Spring pour les tests
+ @SpringBootTest
+// Active un profil Spring spécifique pour le test/configuration
+ @ActiveProfiles("test")
 class ClassroomPartTwoExamplesTest {
 
-    @Autowired
+    // Injection de dépendance par Spring
+     @Autowired
     private IUtilisateurService utilisateurService;
 
-    @Autowired
+    // Injection de dépendance par Spring
+     @Autowired
     private IClasseService classeService;
 
-    @Autowired
+    // Injection de dépendance par Spring
+     @Autowired
     private ICoursClassroomService coursClassroomService;
 
-    @Autowired
+    // Injection de dépendance par Spring
+     @Autowired
     private UtilisateurRepository utilisateurRepository;
 
-    @Autowired
+    // Injection de dépendance par Spring
+     @Autowired
     private ClasseRepository classeRepository;
 
-    @Autowired
+    // Injection de dépendance par Spring
+     @Autowired
     private CoursClassroomRepository coursClassroomRepository;
 
-    @Test
+    // Indique une méthode de test (JUnit)
+     @Test
     void partieDeuxExamples_shouldPersistAndReturnExpectedResults() {
         coursClassroomRepository.deleteAllInBatch();
         utilisateurRepository.deleteAllInBatch();

@@ -17,14 +17,18 @@ import java.util.List;
 /**
  * URI de base du contrôleur: /api/classes
  */
+// Stéréotype: contrôleur REST (retourne des JSON)
 @RestController
+
 @RequestMapping("/api/classes")
+// Génère un constructeur pour les champs finals (Lombok)
 @RequiredArgsConstructor
 public class ClasseRestController {
 
     private final IClasseService classeService;
 
     // Exigence énoncé (II.b): ajouter les classes.
+
     @PostMapping
     public Classe ajouterClasse(@RequestBody Classe c) {
         return classeService.ajouterClasse(c);
@@ -40,11 +44,13 @@ public class ClasseRestController {
         return classeService.getClasseById(codeClasse);
     }
 
+    
     @PutMapping("/{codeClasse}")
     public Classe updateClasse(@PathVariable Integer codeClasse, @RequestBody Classe classe) {
         return classeService.updateClasse(codeClasse, classe);
     }
 
+    
     @DeleteMapping("/{codeClasse}")
     public void deleteClasse(@PathVariable Integer codeClasse) {
         classeService.deleteClasse(codeClasse);

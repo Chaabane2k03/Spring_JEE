@@ -18,25 +18,30 @@ import tn.fst.classroom_crb.services.ICoursClassroomService;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-@Transactional
-@Slf4j
-@Retryable(
-        retryFor = TransientDataAccessException.class,
-        maxAttemptsExpression = "${app.retry.max-attempts:3}",
-        backoff = @Backoff(
-                delayExpression = "${app.retry.delay-ms:200}",
-                multiplierExpression = "${app.retry.multiplier:2.0}",
-                maxDelayExpression = "${app.retry.max-delay-ms:2000}"
-        )
-)
+// Stéréotype: composant métier géré par Spring
+ @Service
+// Génère un constructeur pour les champs finals (Lombok)
+ @RequiredArgsConstructor
+// Transaction Spring (commit/rollback automatique)
+ @Transactional
+// Fournit un logger `log` (Lombok)
+ @Slf4j
+// Essaye de ré-exécuter la méthode en cas d'échec
+ @Retryable(
+ retryFor = TransientDataAccessException.class,
+ maxAttemptsExpression = "${app.retry.max-attempts:3}",
+ backoff = @Backoff(
+ delayExpression = "${app.retry.delay-ms:200}",
+ multiplierExpression = "${app.retry.multiplier:2.0}",
+ maxDelayExpression = "${app.retry.max-delay-ms:2000}"
+ )
+ )
 public class CoursClassroomServiceImpl implements ICoursClassroomService {
 
     private final CoursClassroomRepository coursClassroomRepository;
     private final ClasseRepository classeRepository;
 
-    @Override
+     @Override
     public CoursClassroom ajouterCoursClassroom(CoursClassroom cc, Integer codeClasse) {
         Classe classe = classeRepository.findById(codeClasse)
                 .orElseThrow(() -> new IllegalArgumentException("Classe introuvable avec code " + codeClasse));
@@ -44,7 +49,7 @@ public class CoursClassroomServiceImpl implements ICoursClassroomService {
         return coursClassroomRepository.save(cc);
     }
 
-    @Override
+     @Override
     public void desaffecterCoursClassroomClasse(Integer idCours) {
         CoursClassroom coursClassroom = coursClassroomRepository.findById(idCours)
                 .orElseThrow(() -> new IllegalArgumentException("CoursClassroom introuvable avec id " + idCours));
@@ -52,8 +57,9 @@ public class CoursClassroomServiceImpl implements ICoursClassroomService {
         coursClassroomRepository.save(coursClassroom);
     }
 
-    @Override
-    @Scheduled(fixedRate = 60000)
+     @Override
+    // Tâche planifiée exécutée périodiquement
+     @Scheduled(fixedRate = 60000)
     public void archiverCoursClassrooms() {
         List<CoursClassroom> cours = coursClassroomRepository.findAll();
         for (CoursClassroom cc : cours) {
@@ -72,26 +78,29 @@ public class CoursClassroomServiceImpl implements ICoursClassroomService {
         coursClassroomRepository.saveAll(cours);
     }
 
-    @Override
-    @Transactional(readOnly = true)
+     @Override
+    // Transaction Spring (commit/rollback automatique)
+     @Transactional(readOnly = true)
     public Integer nbHeuresParSpecEtNiv(Specialite sp, Niveau nv) {
         return coursClassroomRepository.nbHeuresParSpecEtNiv(sp, nv);
     }
 
-    @Override
-    @Transactional(readOnly = true)
+     @Override
+    // Transaction Spring (commit/rollback automatique)
+     @Transactional(readOnly = true)
     public CoursClassroom getCoursClassroomById(Integer idCours) {
         return coursClassroomRepository.findById(idCours)
                 .orElseThrow(() -> new IllegalArgumentException("CoursClassroom introuvable avec id " + idCours));
     }
 
-    @Override
-    @Transactional(readOnly = true)
+     @Override
+    // Transaction Spring (commit/rollback automatique)
+     @Transactional(readOnly = true)
     public List<CoursClassroom> getAllCoursClassrooms() {
         return coursClassroomRepository.findAll();
     }
 
-    @Override
+     @Override
     public CoursClassroom updateCoursClassroom(Integer idCours, CoursClassroom coursClassroom) {
         CoursClassroom existing = coursClassroomRepository.findById(idCours)
                 .orElseThrow(() -> new IllegalArgumentException("CoursClassroom introuvable avec id " + idCours));
@@ -107,7 +116,7 @@ public class CoursClassroomServiceImpl implements ICoursClassroomService {
         return coursClassroomRepository.save(existing);
     }
 
-    @Override
+     @Override
     public void deleteCoursClassroom(Integer idCours) {
         if (!coursClassroomRepository.existsById(idCours)) {
             throw new IllegalArgumentException("CoursClassroom introuvable avec id " + idCours);

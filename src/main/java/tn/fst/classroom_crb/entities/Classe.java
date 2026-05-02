@@ -15,26 +15,35 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "classe")
+// Indique que la classe est une entité JPA mappée à une table
+ @Entity
+// Spécifie le nom de la table en base de données
+ @Table(name = "classe")
 @Getter
 @Setter
 public class Classe {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // Indique la colonne clé primaire
+     @Id
+    // Stratégie de génération de la clé primaire
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codeClasse;
 
     private String titre;
 
-    @Enumerated(EnumType.STRING)
+    // Indique comment persister un enum (ex: STRING)
+     @Enumerated(EnumType.STRING)
     private Niveau niveau;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "classe")
+    // Ignore la propriété lors de la sérialisation JSON
+     @JsonIgnore
+    // Association JPA: un -> plusieurs
+     @OneToMany(mappedBy = "classe")
     private List<Utilisateur> utilisateurs = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "classe")
+    // Ignore la propriété lors de la sérialisation JSON
+     @JsonIgnore
+    // Association JPA: un -> plusieurs
+     @OneToMany(mappedBy = "classe")
     private List<CoursClassroom> coursClassrooms = new ArrayList<>();
 }
