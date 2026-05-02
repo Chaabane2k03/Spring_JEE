@@ -1,0 +1,30 @@
+graph LR
+    subgraph "Core Dependencies"
+        Web[spring-boot-starter-web]
+        JPA[spring-boot-starter-data-jpa]
+        Security[spring-boot-starter-security]
+    end
+
+    subgraph "Utilities"
+        Lombok[Lombok]
+        OpenAPI[SpringDoc OpenAPI]
+        Retry[Spring Retry]
+    end
+
+    subgraph "Runtime & Database"
+        MySQL[MySQL Connector]
+        H2[H2 Database - Test]
+    end
+
+    subgraph "View Engine"
+        Thymeleaf[Spring-boot-starter-thymeleaf]
+    end
+
+    Project[classroom_crb] --> Web
+    Project --> JPA
+    Project --> Security
+    Project --> Lombok
+    Project --> OpenAPI
+    Project --> Retry
+    Project --> MySQL
+    Project --> Thymeleaf

@@ -1,0 +1,113 @@
+================================================================================
+          SCRIPT DE PRÉSENTATION : APPLICATION CLASSROOM CRB (SPRING BOOT)
+================================================================================
+
+DURÉE ESTIMÉE : 5 à 10 minutes
+RÔLE : Développeur présentant le projet à l'enseignante (Mme Fourati Hend)
+
+---
+1. INTRODUCTION & CONTEXTE (00:00 - 01:00)
+---
+"Bonjour, nous allons vous présenter notre solution 'Classroom CRB'. 
+Cette application a été conçue pour répondre aux besoins d'un établissement 
+universitaire (type FST) pour la gestion automatisée des classes, des 
+utilisateurs (étudiants) et des cours.
+
+L'objectif principal était de digitaliser le processus d'affectation et de 
+fournir des outils de statistiques sur les volumes horaires et les effectifs 
+par niveau."
+
+---
+2. ARCHITECTURE TECHNIQUE & SPRING BOOT (01:00 - 02:30)
+---
+"Sur le plan technique, nous avons utilisé Spring Boot (version 3+). 
+Pourquoi Spring Boot ? Pour son écosystème robuste :
+- L'Auto-configuration : Qui réduit drastiquement le code de configuration.
+- Spring Data JPA : Pour une gestion simplifiée de la persistance.
+- Spring Security : Pour sécuriser nos accès API.
+
+Nous avons adopté une ARCHITECTURE EN COUCHES (Layered Architecture) :
+1. Couche Entité : Modélisation des données avec JPA/Hibernate.
+2. Couche Repository : Interfaces héritant de JpaRepository.
+3. Couche Service : Logique métier complexe (affectations, calculs).
+4. Couche Controller : Exposition de l'API REST via @RestController.
+5. Couche UI (Thymeleaf) : Une interface web moderne servie par @Controller.
+
+---
+3. FOCUS SUR THYMELEAF & INTERFACE (02:30 - 03:30)
+---
+"Pour faciliter la démonstration, nous avons intégré Thymeleaf. 
+Thymeleaf est un moteur de template Java côté serveur (SSR) qui permet :
+- Une intégration naturelle avec Spring Boot et Spring Security.
+- L'utilisation de templates HTML purs qui restent lisibles dans un navigateur.
+- Le passage dynamique de données entre le contrôleur et la vue.
+
+Dans notre projet, Thymeleaf sert de 'Dashboard' interactif. Il communique 
+avec nos endpoints REST via JavaScript pour offrir une expérience fluide 
+(SPA-like) tout en restant intégré au backend Java."
+
+---
+4. MODÈLE DE DONNÉES ET ENTITÉS (03:30 - 04:30)
+---
+"Voici notre structure de données (basée sur l'énoncé) :
+- Utilisateur : Avec nom, prénom et mot de passe.
+- Classe : Identifiée par un code, un titre et un Niveau (Enum : PREMIERE, DEUXIEME, etc.).
+- CoursClassroom : Spécialité (Enum : INFORMATIQUE, AGRICULTURE...), nom et heures.
+
+Les relations :
+- Un Utilisateur appartient à une seule Classe (ManyToOne).
+- Une Classe peut avoir plusieurs Cours (OneToMany bidirectionnel).
+Toutes les IDs sont générées via la stratégie IDENTITY de MySQL."
+
+---
+4. DÉMONSTRATION DES FONCTIONNALITÉS (03:30 - 07:30)
+---
+[ACTION : Ouvrir le Dashboard UI ou Swagger]
+
+A. Gestion des Utilisateurs et Classes :
+"Nous commençons par ajouter les utilisateurs 'Amna' et 'Ahmed' via l'API. 
+Ensuite, nous créons les classes '4AG1' et '5EM1'. 
+L'affectation se fait via une méthode de service qui lie l'ID de l'utilisateur 
+au code de la classe."
+
+B. Gestion des Cours :
+"Nous ajoutons le cours 'Programmation C' (42h) en l'affectant directement 
+à la classe 4AG1. La logique métier vérifie l'existence de la classe avant 
+l'enregistrement."
+
+C. Statistiques et Calculs (Points clés du TP) :
+"Deux fonctionnalités majeures sont présentes :
+1. nbUtilisateursParNiveau : Qui compte dynamiquement les étudiants inscrits 
+   dans un niveau spécifique.
+2. nbHeuresParSpecEtNiv : Une requête personnalisée qui calcule la somme 
+   des heures pour une spécialité donnée (ex: INFORMATIQUE) au sein d'un niveau."
+
+D. Désaffectation et Archivage :
+"Nous pouvons retirer un cours d'une classe sans le supprimer. 
+Pour l'archivage, nous avons implémenté la question bonus : 
+Un SCHEDULER (@Scheduled) s'exécute toutes les 60 secondes pour passer 
+l'état de tous les cours en 'archivé = true' automatiquement."
+
+---
+5. SÉCURITÉ ET DEVOPS (07:30 - 09:00)
+---
+"Pour rendre l'application prête pour la production, nous avons ajouté :
+- Rate Limiting : Une sécurité qui bloque les abus (plus de 60 requêtes/min) 
+  en retournant une erreur HTTP 429.
+- Retry Pattern : En cas de micro-coupure réseau avec la base de données, 
+  le service retente l'opération automatiquement.
+- Dockerisation : Via le plugin Google Jib, nous avons généré une image Docker 
+  optimisée sans avoir à écrire de Dockerfile complexe. L'application se lance 
+  en une commande avec Docker Compose (App + MySQL)."
+
+---
+6. CONCLUSION (09:00 - 10:00)
+---
+"En conclusion, ce projet démontre la puissance de Spring Boot pour créer 
+rapidement des applications d'entreprise robustes, sécurisées et facilement 
+déployables. Toutes les exigences du TP de Mme Fourati Hend ont été remplies 
+et testées avec succès via des tests unitaires H2."
+
+================================================================================
+FIN DU SCRIPT
+================================================================================

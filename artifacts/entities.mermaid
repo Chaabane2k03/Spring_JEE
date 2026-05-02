@@ -1,0 +1,36 @@
+classDiagram
+    class Classe {
+        +Integer codeClasse
+        +String titre
+        +Niveau niveau
+    }
+    class Utilisateur {
+        +Integer idUtilisateur
+        +String prenom
+        +String nom
+        +String password
+    }
+    class CoursClassroom {
+        +Integer idCours
+        +Specialite specialite
+        +String nom
+        +Integer nbHeures
+        +boolean archive
+    }
+    class Niveau {
+        <<enumeration>>
+        PREMIERE
+        DEUXIEME
+        TROISIEME
+    }
+    class Specialite {
+        <<enumeration>>
+        INFORMATIQUE
+        GENIE_CIVIL
+        ELECTRIQUE
+    }
+
+    Classe "1" -- "*" Utilisateur : contient
+    Classe "1" -- "*" CoursClassroom : possede
+    Classe .. Niveau
+    CoursClassroom .. Specialite

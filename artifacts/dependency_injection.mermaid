@@ -1,0 +1,31 @@
+graph TD
+    subgraph "Spring IoC Container"
+        Container((ApplicationContext))
+    end
+
+    subgraph "Bean Creation & Injection Flow"
+        direction TB
+        R["<b>1. Repository</b><br/>@Repository<br/>ClasseRepository"]
+        S["<b>2. Service</b><br/>@Service<br/>ClasseServiceImpl"]
+        C["<b>3. Controller</b><br/>@RestController<br/>ClasseRestController"]
+    end
+
+    subgraph "Lombok Mechanism"
+        L[("@RequiredArgsConstructor")]
+    end
+
+    Container -- "1. Instantiates" --> R
+    Container -- "2. Instantiates & Injects R" --> S
+    Container -- "3. Instantiates & Injects S" --> C
+
+    L -. "Generates Constructor for" .-> S
+    L -. "Generates Constructor for" .-> C
+
+    S -- "private final" --> R
+    C -- "private final" --> S
+
+    style Container fill:#f9f,stroke:#333,stroke-width:2px
+    style R fill:#dfd,stroke:#333
+    style S fill:#dfd,stroke:#333
+    style C fill:#dfd,stroke:#333
+    style L fill:#ffd,stroke:#333,stroke-dasharray: 5 5

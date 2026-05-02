@@ -1,0 +1,23 @@
+graph TD
+    Request[HTTP Request] --> FilterChain[Spring Security Filter Chain]
+    
+    subgraph "Filter Chain"
+        RateLimit[ApiRateLimitingFilter]
+        CSRF[CSRF Filter - Disabled]
+        AuthFilter[UsernamePasswordAuthenticationFilter]
+    end
+
+    FilterChain --> RateLimit
+    RateLimit --> CSRF
+    CSRF --> AuthFilter
+    AuthFilter --> Decision[Authorization Manager]
+    
+    Decision -- "PermitAll" --> Controller[REST Controller]
+    
+    subgraph "Configuration"
+        Config[SecurityConfig.java]
+        Props[RateLimitProperties.java]
+    end
+    
+    Config -- defines --> FilterChain
+    Props -- configures --> RateLimit

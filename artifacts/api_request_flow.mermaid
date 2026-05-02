@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant Client
+    participant Controller as ClasseRestController
+    participant Service as ClasseServiceImpl
+    participant Repo as ClasseRepository
+    participant DB as MySQL
+
+    Client->>Controller: POST /api/classes (JSON)
+    Controller->>Service: ajouterClasse(classe)
+    Service->>Repo: save(classe)
+    Repo->>DB: INSERT INTO classe ...
+    DB-->>Repo: Saved Entity
+    Repo-->>Service: Saved Entity
+    Service-->>Controller: Saved Entity
+    Controller-->>Client: 200 OK (JSON)

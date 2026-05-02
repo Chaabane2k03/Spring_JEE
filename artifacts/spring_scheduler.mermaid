@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant S as Spring TaskScheduler
+    participant SRV as CoursClassroomServiceImpl
+    participant DB as MySQL Database
+
+    loop Every 60 seconds (fixedRate = 60000)
+        S->>SRV: Trigger @Scheduled method
+        SRV->>SRV: execute task (e.g. archiving)
+        SRV->>DB: Update entities status
+        DB-->>SRV: Confirmation
+        SRV-->>S: Task Completed
+    end

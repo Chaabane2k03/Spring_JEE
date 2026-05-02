@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classroom CRB - Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+<header class="hero">
+    <h1>Classroom CRB</h1>
+    <p>Interface de test rapide pour l'API REST (énoncé + CRUD complet)</p>
+    <p class="hint">Swagger: <a th:href="@{/swagger-ui.html}" target="_blank">/classroom/swagger-ui.html</a></p>
+</header>
+
+<main class="grid">
+    <section class="card">
+        <h2>Dataset énoncé</h2>
+        <button id="seed-btn">Injecter les données de l'énoncé</button>
+        <button id="refresh-all-btn">Rafraîchir les tableaux</button>
+    </section>
+
+    <section class="card">
+        <h2>Ajouter une classe</h2>
+        <form id="classe-form">
+            <input name="titre" placeholder="Titre (ex: 4AG1)" required>
+            <select name="niveau" required>
+                <option value="">Niveau...</option>
+                <option>PREMIERE</option>
+                <option>DEUXIEME</option>
+                <option>TROISIEME</option>
+                <option>QUATRIEME</option>
+                <option>CINQUIEME</option>
+            </select>
+            <button type="submit">Créer classe</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Ajouter un utilisateur</h2>
+        <form id="user-form">
+            <input name="prenom" placeholder="Prénom" required>
+            <input name="nom" placeholder="Nom" required>
+            <input name="password" placeholder="Password" required>
+            <button type="submit">Créer utilisateur</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Ajouter un cours</h2>
+        <form id="cours-form">
+            <input name="nom" placeholder="Nom du cours" required>
+            <select name="specialite" required>
+                <option value="">Spécialité...</option>
+                <option>INFORMATIQUE</option>
+                <option>AGRICULTURE</option>
+            </select>
+            <input type="number" name="nbHeures" min="1" placeholder="Nb heures" required>
+            <input type="number" name="codeClasse" min="1" placeholder="Code classe" required>
+            <button type="submit">Créer cours</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Actions énoncé</h2>
+        <form id="affect-form">
+            <input type="number" name="idUtilisateur" min="1" placeholder="ID utilisateur" required>
+            <input type="number" name="codeClasse" min="1" placeholder="Code classe" required>
+            <button type="submit">Affecter utilisateur -> classe</button>
+        </form>
+        <form id="desaffect-form">
+            <input type="number" name="idCours" min="1" placeholder="ID cours" required>
+            <button type="submit">Désaffecter cours</button>
+        </form>
+        <form id="count-level-form">
+            <select name="niveau" required>
+                <option value="">Niveau...</option>
+                <option>PREMIERE</option>
+                <option>DEUXIEME</option>
+                <option>TROISIEME</option>
+                <option>QUATRIEME</option>
+                <option>CINQUIEME</option>
+            </select>
+            <button type="submit">Nb utilisateurs / niveau</button>
+        </form>
+        <form id="hours-form">
+            <select name="specialite" required>
+                <option value="">Spécialité...</option>
+                <option>INFORMATIQUE</option>
+                <option>AGRICULTURE</option>
+            </select>
+            <select name="niveau" required>
+                <option value="">Niveau...</option>
+                <option>PREMIERE</option>
+                <option>DEUXIEME</option>
+                <option>TROISIEME</option>
+                <option>QUATRIEME</option>
+                <option>CINQUIEME</option>
+            </select>
+            <button type="submit">Nb heures spécialité+niveau</button>
+        </form>
+        <button id="archive-btn">Archiver tous les cours</button>
+    </section>
+
+    <section class="card large">
+        <h2>Utilisateurs</h2>
+        <pre id="users-out"></pre>
+    </section>
+    <section class="card large">
+        <h2>Classes</h2>
+        <pre id="classes-out"></pre>
+    </section>
+    <section class="card large">
+        <h2>Cours</h2>
+        <pre id="cours-out"></pre>
+    </section>
+    <section class="card large">
+        <h2>Résultat opération</h2>
+        <pre id="result-out">Prêt.</pre>
+    </section>
+</main>
+
+<script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+graph TD
+    subgraph "Build Process (Maven + Jib)"
+        Src[Source Code] --> Maven[Maven Build]
+        Maven --> Jib[Jib Plugin]
+        Jib --> Image[Docker Image: classroom-crb:latest]
+    end
+
+    subgraph "Runtime (Docker Compose)"
+        Compose[docker-compose.yml] --> AppService[App Service (Port 8089)]
+        Compose --> DBService[MySQL Service (Port 3306)]
+        AppService -- "JDBC Link" --> DBService
+    end
+
+    Image --> AppService

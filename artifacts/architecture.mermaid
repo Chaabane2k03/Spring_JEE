@@ -1,0 +1,25 @@
+graph TD
+    subgraph "Client Layer"
+        Browser[Web Browser / Postman]
+        Swagger[Swagger UI / OpenAPI]
+    end
+
+    subgraph "Application Layer (Spring Boot)"
+        Controller[REST Controllers]
+        Security[Spring Security / Filter Chain]
+        Service[Business Services]
+        Repo[Spring Data JPA Repositories]
+    end
+
+    subgraph "Infrastructure Layer"
+        DB[(MySQL Database)]
+        Scheduler[Spring Scheduler Task]
+    end
+
+    Browser --> Security
+    Swagger --> Security
+    Security --> Controller
+    Controller --> Service
+    Service --> Repo
+    Repo --> DB
+    Scheduler --> Service
